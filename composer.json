@@ -1,0 +1,17 @@
+{
+    "name": "roman/simple_parser",
+    "require": {
+    },
+    "autoload": {
+        "psr-0": { "": "" }
+    },
+    "authors": [
+        {
+            "name": "roman-curse",
+            "email": "frspm.roman@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "6.*"
+    }
+}
