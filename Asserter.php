@@ -41,6 +41,7 @@ class Asserter
      */
     public function prsFactor(string &$factor): ?float
     {
+        $factor = str_replace(' ', '', $factor);
         $leftOp = $this->prsTerm($factor);
         if ('' == $factor) {
             return $leftOp;

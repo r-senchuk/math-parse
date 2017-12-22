@@ -30,14 +30,20 @@ class AsserterTest extends \PHPUnit\Framework\TestCase
 
     public function testPrsNumber()
     {
-        $f = '235Єва';
-        $result = $this->assert->prsNumber($f);
+        $number = '235Єва';
+        $result = $this->assert->prsNumber($number);
         self::assertEquals(235, $result);
     }
 
+    public function testPrsTerm()
+    {
+        $term = '(7)';
+        $result = $this->assert->prsTerm($term);
+        self::assertEquals(7, $result);
+    }
     public function testPrsFactor()
     {
-        $factor = (12 * 5) * 2;
+        $factor = '12 *5*2';
         $result = $this->assert->prsFactor($factor);
 
         self::assertEquals(120, $result);
