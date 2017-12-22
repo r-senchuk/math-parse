@@ -11,41 +11,55 @@ class Asserter
      * @param string $expression
      * @return int
      */
-    public function parseExpr(string $expression): ?int
+    public function prsExpression(string &$expression): ?int
     {
-        $op = $this->parseFactor($expression);
+        $leftOp = $this->prsFactor($expression);
+
+        if ($expression[0] == '+') {
+            $expression = substr($expression, 1);
+
+            return $leftOp + $this->prsExpression($expression);
+        }
+
+        if ($expression[0] == '-') {
+            $expression = substr($expression, 1);
+
+            return $leftOp - $this->prsExpression($expression);
+        }
+
+        return $leftOp;
     }
 
     /**
      * @param string $factor
      * @return int|null
      */
-    public function parseFactor(string &$factor): ?int
+    public function prsFactor(string &$factor): ?int
     {
-        $op = $this->parseTerm($factor);
+        $leftOp = $this->prsTerm($factor);
         if ('' == $factor) {
-            return $op;
+            return $leftOp;
         }
 
         if ($factor[0] == '*') {
             $factor = substr($factor, 1);
 
-            return $op * $this->parseFactor($factor);
+            return $leftOp * $this->prsFactor($factor);
         }
         if ($factor[0] == '/') {
             $factor = substr($factor, 1);
 
-            return $op * $this->parseFactor($factor);
+            return $leftOp * $this->prsFactor($factor);
         }
 
-        return $op;
+        return $leftOp;
     }
 
     /**
      * @param string $term
      * @return int
      */
-    public function parseTerm(string &$term): ?int
+    public function prsTerm(string &$term): ?int
     {
         $returnValue = 0;
         if (strlen($term) == $returnValue) {
@@ -54,12 +68,12 @@ class Asserter
         }
         if (is_numeric($term[0])) {
 
-            return $this->parseNumber($term);
+            return $this->prsNumber($term);
         }
         if ($term[0] === '(') {
             $term = substr($term, 1);
 
-            return $this->parseExpr($term);
+            return $this->prsExpression($term);
         }
         if ($term[0] === ')') {
             $term = substr($term, 1);
@@ -72,7 +86,7 @@ class Asserter
      * @param string $number
      * @return int|null
      */
-    public function parseNumber(string &$number): ?int
+    public function prsNumber(string &$number): ?int
     {
         $numberTemp = '';
         while (strlen($number) > 0) {
