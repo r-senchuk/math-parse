@@ -1,6 +1,5 @@
-# math-parse
+# Create parser of the expressions which can be defined by the BNF: *
 ```
-Create parser of the expressions which can be defined by the BNF:
 <expr> ::= <term> | <term> <add> <term>
 <term> ::= <factor> | <factor> <mult> <factor> | <factor> <mult> <term>
 <factor> ::= <neg> | - <neg>
@@ -12,3 +11,4 @@ Create parser of the expressions which can be defined by the BNF:
 Example: 200+12*((1/8)+1)-19
 Script should be able to parse specified expressions and evaluate them. 
 ```
+## math-parse
