@@ -9,11 +9,15 @@ class Asserter
 {
     /**
      * @param string $expression
-     * @return int
+     * @return float
      */
-    public function prsExpression(string &$expression): ?int
+    public function prsExpression(string &$expression): ?float
     {
         $leftOp = $this->prsFactor($expression);
+
+        if ('' == $expression) {
+            return $leftOp;
+        }
 
         if ($expression[0] == '+') {
             $expression = substr($expression, 1);
@@ -32,9 +36,9 @@ class Asserter
 
     /**
      * @param string $factor
-     * @return int|null
+     * @return float
      */
-    public function prsFactor(string &$factor): ?int
+    public function prsFactor(string &$factor): ?float
     {
         $leftOp = $this->prsTerm($factor);
         if ('' == $factor) {
@@ -49,7 +53,7 @@ class Asserter
         if ($factor[0] == '/') {
             $factor = substr($factor, 1);
 
-            return $leftOp * $this->prsFactor($factor);
+            return $leftOp / $this->prsFactor($factor);
         }
 
         return $leftOp;
@@ -57,12 +61,12 @@ class Asserter
 
     /**
      * @param string $term
-     * @return int
+     * @return float
      */
-    public function prsTerm(string &$term): ?int
+    public function prsTerm(string &$term): ?float
     {
         $returnValue = 0;
-        if (strlen($term) == $returnValue) {
+        if ($term == '') {
 
             return $returnValue;
         }
@@ -72,8 +76,10 @@ class Asserter
         }
         if ($term[0] === '(') {
             $term = substr($term, 1);
+            $returnValue = $this->prsExpression($term);
+            $term = substr($term, 1);
 
-            return $this->prsExpression($term);
+            return $returnValue;
         }
         if ($term[0] === ')') {
             $term = substr($term, 1);
@@ -84,9 +90,9 @@ class Asserter
 
     /**
      * @param string $number
-     * @return int|null
+     * @return float
      */
-    public function prsNumber(string &$number): ?int
+    public function prsNumber(string &$number): ?float
     {
         $numberTemp = '';
         while (strlen($number) > 0) {
@@ -103,6 +109,6 @@ class Asserter
 
         }
 
-        return (int)$numberTemp;
+        return (float)$numberTemp;
     }
 }
