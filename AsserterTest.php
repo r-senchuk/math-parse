@@ -15,7 +15,6 @@ require 'Asserter.php';
 class AsserterTest extends \PHPUnit\Framework\TestCase
 {
 
-    public $expression2 = '(+1)+(2)';
     public $expression1 = '200+12*((1/8)+1)-19';
 
     /**
@@ -46,8 +45,7 @@ class AsserterTest extends \PHPUnit\Framework\TestCase
 
     public function testPrsExpression()
     {
-        $result = $this->assert->prsExpression($this->expression2);
-//        self::assertEquals(194.5, $result);
-        self::assertEquals(21.25, $result);
+        $result = $this->assert->prsExpression($this->expression1);
+        self::assertEquals(194.5, $result);
     }
 }

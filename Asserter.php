@@ -8,6 +8,7 @@
 class Asserter
 {
     /**
+     * Evaluate simple math expressions
      * @param string $expression
      * @return float
      */
