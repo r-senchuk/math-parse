@@ -41,6 +41,7 @@ class AsserterTest extends \PHPUnit\Framework\TestCase
         $result = $this->assert->prsTerm($term);
         self::assertEquals(7, $result);
     }
+
     public function testPrsFactor()
     {
         $factor = '12 *5*2';
@@ -51,6 +52,15 @@ class AsserterTest extends \PHPUnit\Framework\TestCase
 
     public function testPrsExpression()
     {
+        /* test Negative sign numbers */
+        $negativeExpression = '(-7)+(-13-5)';
+        $result = $this->assert->prsExpression($negativeExpression);
+        self::assertEquals(-15, $result);
+
+        /*
+         *
+         * Main Test
+         */
         $result = $this->assert->prsExpression($this->expression1);
         self::assertEquals(194.5, $result);
     }
